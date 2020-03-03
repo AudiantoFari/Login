@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     int success;
     ConnectivityManager conMgr;
 
-    private String url = "https://themanusia.000webhostapp.com/proses_login.php";
+    private String url = Server.URL + "proses_login.php";
     private static final String TAG = Login.class.getSimpleName();
 
     private static final String TAG_SUCCESS = "success";
