@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +31,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     EditText txtID, txtPassword;
     Button btnLogin;
+    TextView tvRegister;
     ProgressDialog pDialog;
 
     int success;
@@ -68,6 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         txtID = findViewById(R.id.txtID);
         txtPassword = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        tvRegister = findViewById(R.id.tvRegister);
 
         sharedPreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedPreferences.getBoolean(session_status, false);
@@ -83,6 +86,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         btnLogin.setOnClickListener(this);
+        tvRegister.setOnClickListener(this);
     }
 
     @Override
@@ -101,6 +105,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     Toast.makeText(getApplicationContext(), "Kolom tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.tvRegister :
+                Intent intent = new Intent(Login.this, Register.class);
+                startActivity(intent);
                 break;
         }
     }

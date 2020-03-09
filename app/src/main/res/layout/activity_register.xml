@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Register">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="287dp"
-        android:layout_height="226dp"
+        android:layout_width="277dp"
+        android:layout_height="270dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621">
+        app:layout_constraintVertical_bias="0.72">
 
         <EditText
             android:id="@+id/txtID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txtUsername"
             android:ems="10"
             android:hint="Username"
             android:inputType="text" />
@@ -29,41 +30,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtID"
-            android:layout_marginTop="5dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/txtConfirmPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtPassword"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtConfirmPassword"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="39dp"
-            android:layout_marginEnd="94dp"
-            android:background="#E91E63"
-            android:text="Login"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="90dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Register"
             android:textColor="#FFFFFF" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/txtUsername"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPassword"
-            android:layout_marginTop="5dp"
-            android:text="Dont have account?" />
-
-        <TextView
-            android:id="@+id/tvRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPassword"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/textView"
-            android:text="@string/register"
-            android:textColor="#0000EE" />
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Nama" />
     </RelativeLayout>
 
     <ImageView

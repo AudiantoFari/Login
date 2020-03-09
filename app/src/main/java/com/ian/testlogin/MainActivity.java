@@ -53,11 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String tag_json_obj = "json_obj_req";
 
-    SharedPreferences sharedPreferences;
-    boolean session = false;
-    public static final String my_shared_preferences = "my_shared_preferences";
-    public static final String session_status = "session_status";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
