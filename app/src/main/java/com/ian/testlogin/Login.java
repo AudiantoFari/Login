@@ -77,6 +77,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (session) {
             Intent intent = new Intent(Login.this, MainActivity.class);
             intent.putExtra(TAG_USERNAME, nama);
+            intent.putExtra(TAG_ID, id);
             finish();
             startActivity(intent);
         }
@@ -100,6 +101,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     Toast.makeText(getApplicationContext(), "Kolom tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 }
+                break;
         }
     }
 
@@ -162,17 +164,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         };
 
         AppController.getmInstance().addToRequestQueue(strReq, tag_json_obj);
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing()) {
-            pDialog.dismiss();
-        }
-    }
-
-    private void showDialog() {
-        if  (pDialog.isShowing()) {
-            pDialog.show();
-        }
     }
 }
