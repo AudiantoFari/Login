@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,8 @@ import com.bumptech.glide.request.RequestOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,15 +38,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnLogout, btnAbsen;
+    Button btnLogout, btnAbsen, btnEdit;
     TextView tvNama;
-    String nama, username;
+    String nama, username, gambar;
     SharedPreferences sharedpreferences;
     CircleImageView civPhoto;
     ProgressDialog pDialog;
 
     public static final String TAG_USERNAME = "username";
     public static final String TAG_ID = "id";
+    public static final String TAG_GAMBAR = "gambar";
 
     private static final String url = Server.URL + "proses_absen.php";
 
@@ -62,41 +67,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvNama = findViewById(R.id.tvNama);
         civPhoto = findViewById(R.id.civPhoto);
         btnAbsen = findViewById(R.id.btnAbsen);
+        btnEdit = findViewById(R.id.btnEdit);
 
         sharedpreferences = getSharedPreferences(Login.my_shared_preferences, Context.MODE_PRIVATE);
 
         nama = getIntent().getStringExtra(TAG_USERNAME);
         username = getIntent().getStringExtra(TAG_ID);
+        gambar = getIntent().getStringExtra(TAG_GAMBAR);
 
         tvNama.setText(nama);
 
-        Glide.with(this)
-                .load(R.drawable.doge)
-                .apply(new RequestOptions())
-                .into(civPhoto);
+        loadGambar();
 
         btnLogout.setOnClickListener(this);
         btnAbsen.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
+    }
+
+    private void loadGambar() {
+        Glide.with(this)
+                .load(Server.URL + "img/" + gambar+".png")
+                .apply(new RequestOptions())
+                .error(R.drawable.doge)
+                .into(civPhoto);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnLogout:
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Login.session_status, false);
-                editor.putString(TAG_ID, null);
-                editor.putString(TAG_USERNAME, null);
-                editor.commit();
-
-                Intent intent = new Intent(this, Login.class);
-                finish();
-                startActivity(intent);
+                logout();
+                break;
+            case R.id.btnEdit :
+                Intent intent1 = new Intent(this, ProfileActivity.class);
+                intent1.putExtra(ProfileActivity.TAG_USERNAME, username);
+                intent1.putExtra(ProfileActivity.TAG_GAMBAR, gambar);
+                startActivity(intent1);
                 break;
             case R.id.btnAbsen :
                 absen(username);
                 break;
         }
+    }
+
+    public void logout() {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putBoolean(Login.session_status, false);
+        editor.putString(TAG_ID, null);
+        editor.putString(TAG_USERNAME, null);
+        editor.commit();
+
+        Intent intent = new Intent(this, Login.class);
+        finish();
+        startActivity(intent);
     }
 
     private void absen(final String username) {

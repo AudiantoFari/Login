@@ -45,12 +45,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public final static String TAG_USERNAME = "username";
     public final static String TAG_ID = "id";
+    public final static String TAG_GAMBAR = "gambar";
 
     String tag_json_obj = "json_obj_req";
 
     SharedPreferences sharedPreferences;
     boolean session = false;
-    String id, nama;
+    String id, nama, gambar;
     public static final String my_shared_preferences = "my_shared_preferences";
     public static final String session_status = "session_status";
 
@@ -76,11 +77,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         session = sharedPreferences.getBoolean(session_status, false);
         id = sharedPreferences.getString(TAG_ID, null);
         nama = sharedPreferences.getString(TAG_USERNAME, null);
+        gambar = sharedPreferences.getString(TAG_GAMBAR, null);
 
         if (session) {
             Intent intent = new Intent(Login.this, MainActivity.class);
             intent.putExtra(TAG_USERNAME, nama);
             intent.putExtra(TAG_ID, id);
+            intent.putExtra(TAG_GAMBAR, gambar);
             finish();
             startActivity(intent);
         }
@@ -123,7 +126,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(TAG, "Login Response : " + response.toString());
+                Log.e(TAG, "Login Response : " + response);
                 pDialog.dismiss();
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -132,6 +135,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     if (success == 1) {
                         String username = jObj.getString(TAG_ID);
                         String nama = jObj.getString(TAG_USERNAME);
+                        String gambar = jObj.getString(TAG_GAMBAR);
 
                         Log.e("Successfully Login!", jObj.toString());
 
@@ -141,12 +145,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         editor.putBoolean(session_status, true);
                         editor.putString(TAG_ID, username);
                         editor.putString(TAG_USERNAME, nama);
+                        editor.putString(TAG_GAMBAR, gambar);
                         editor.commit();
 
                         Intent intent = new Intent(Login.this, MainActivity.class);
                         intent.putExtra(TAG_USERNAME, nama);
                         intent.putExtra(TAG_ID, username);
+                        intent.putExtra(TAG_GAMBAR, gambar);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_SHORT).show();
                     }
